@@ -25,3 +25,31 @@ def getDataTempatWisata (request):
     TempatWisatas = TempatWisata.objects.all()
     serializer = TempatWisataSerializer(TempatWisatas, many=True)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def addKategori(request):
+    serializer = KategoriSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def addKota(request):
+    serializer = KotaSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def addKecamatan(request):
+    serializer = KecamatanSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def addTempatWisata(request):
+    serializer = TempatWisataSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)

@@ -7,5 +7,10 @@ urlpatterns = [
     path('get_kecamatan', views.getDataKecamatan),
     path('get_tempat_wisata', views.getDataKategori),
 
+    path('add_kategori', views.addKategori),
+    path('add_kota', views.addKota),
+    path('add_kecamatan', views.addKecamatan),
+    path('add_tempat_wisata', views.addTempatWisata),
+
 
 ]
