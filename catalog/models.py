@@ -14,13 +14,13 @@ class Kota (models.Model):
 
 class Kecamatan (models.Model):
     kota = models.ForeignKey(Kota, on_delete=models.CASCADE)
-    nama = models.CharField(max_length=30, unique= True)
+    nama = models.CharField(max_length=30, unique= True, default='')
 
 class TempatWisata (models.Model):
     kecamatan = models.ForeignKey(Kecamatan, on_delete=models.CASCADE)
     kategori = models.ManyToManyField(Kategori)
     nama = models.CharField(max_length=50)
-    link_gmap = models.CharField(max_length=50)
+    link_gmap = models.CharField(max_length=50, blank=True, null=True)
     alamat = models.TextField(blank=True, null=True)
     rating = models.IntegerField(blank=True, null=True)
     deskripsi_singkat = models.TextField(blank=True, null=True)
