@@ -27,8 +27,8 @@ def getDataTempatWisata (request):
     return Response(serializer.data)
 
 @api_view(['GET'])
-def getFotoTambahanWisata (request):
-    FotoTambahanWisatas = FotoTambahanWisata.objects.all()
+def getFotoTambahanWisata(request, id):
+    FotoTambahanWisatas = FotoTambahanWisata.objects.filter(tempat_wisata=int(id))
     serializer = FotoTambahanWisataSerializer(FotoTambahanWisatas, many=True)
     return Response(serializer.data)
 
@@ -70,5 +70,28 @@ def addTempatWisata(request):
 @api_view(['GET'])
 def getTempatWisataByKecamatan (request, kecamatan):
     TempatWisatas = TempatWisata.objects.filter(kecamatan= kecamatan)
+    serializer = TempatWisataSerializer(TempatWisatas, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getTempatWisataByKota (request, kota):
+    kecamatans = Kecamatan.objects.filter(kota=kota)
+    list_kecamatan = [entry for entry in kecamatans]
+    list_tempat_wisata = list()
+    for objek_kecamatan in list_kecamatan:
+        print(objek_kecamatan.nama)
+        list_tempat_wisata += TempatWisata.objects.filter(kecamatan= objek_kecamatan.nama)
+    serializer = TempatWisataSerializer(list_tempat_wisata, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getTempatWisataByKategori (request, kategori):
+    TempatWisatas = TempatWisata.objects.filter(kategori= kategori)
+    serializer = TempatWisataSerializer(TempatWisatas, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getTempatWisataBySearchNama (request, nama):
+    TempatWisatas = TempatWisata.objects.filter(nama__icontains= nama)
     serializer = TempatWisataSerializer(TempatWisatas, many=True)
     return Response(serializer.data)
