@@ -5,16 +5,17 @@ from django.db import models
 
 # Create your models here.
 class Kategori (models.Model):
-    nama = models.CharField(max_length=20, unique= True)
+    nama = models.CharField(max_length=20, primary_key= True)
     icon = models.CharField(max_length=30, default='')
 
 class Kota (models.Model):
-    nama = models.CharField(max_length=30, unique= True)
+    nama = models.CharField(max_length=30,primary_key=True)
     is_locked = models.BooleanField(default=False)
 
 class Kecamatan (models.Model):
     kota = models.ForeignKey(Kota, on_delete=models.CASCADE)
-    nama = models.CharField(max_length=30, unique= True, default='')
+    nama = models.CharField(max_length=55, primary_key= True)
+
 
 class TempatWisata (models.Model):
     kecamatan = models.ForeignKey(Kecamatan, on_delete=models.CASCADE)
@@ -22,7 +23,7 @@ class TempatWisata (models.Model):
     nama = models.CharField(max_length=50)
     link_gmap = models.CharField(max_length=50, blank=True, null=True)
     alamat = models.TextField(blank=True, null=True)
-    rating = models.IntegerField(blank=True, null=True)
+    rating = models.FloatField(blank=True, null=True)
     deskripsi_singkat = models.TextField(blank=True, null=True)
     deskripsi_lengkap = models.TextField(blank=True, null=True)
     foto = models.ImageField(blank=True, null=True, upload_to="images/")

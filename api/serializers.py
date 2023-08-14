@@ -23,3 +23,9 @@ class TempatWisataSerializer(serializers.ModelSerializer):
     class Meta:
         model = TempatWisata
         fields = '__all__'
+        
+
+class FotoTambahanWisataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FotoTambahanWisata
+        fields = '__all__'

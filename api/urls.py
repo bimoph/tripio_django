@@ -12,5 +12,6 @@ urlpatterns = [
     path('add_kecamatan', views.addKecamatan),
     path('add_tempat_wisata', views.addTempatWisata),
 
+    path('get_tempat_wisata_by_kecamatan/<str:kecamatan>', views.getTempatWisataByKecamatan)
 
 ]
