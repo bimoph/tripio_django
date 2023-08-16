@@ -60,12 +60,30 @@ def addTempatWisata(request):
         serializer.save()
     return Response(serializer.data)
 
+@api_view(['POST'])
+def addFotoTambahan(request):
+    serializer = FotoTambahanWisataSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
 
-# 4. Buat api buat get data dari tempat wisata by lokasi
-# 5. Buat api buat get data dari tempat wisata by kategori
-# 6. Buat api buat login
-# 7. fitur search kalo sempet gua lagi nyoba juga ini
-# 8. Kalo user dah jadi buat database buat nyimpen data TempatWisata (Get dan Post)
+# 4. filter tempat n kategori
+@api_view(['GET'])
+def getTempatWisataByKategoriKecamatan (request, kategori, kecamatan):
+    TempatWisatas = TempatWisata.objects.filter(kategori= kategori, kecamatan=kecamatan)
+    serializer = TempatWisataSerializer(TempatWisatas, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getTempatWisataByKategoriKota (request, kategori, kota):
+    kecamatans = Kecamatan.objects.filter(kota=kota, kategori=kategori)
+    list_kecamatan = [entry for entry in kecamatans]
+    list_tempat_wisata = list()
+    for objek_kecamatan in list_kecamatan:
+        print(objek_kecamatan.nama)
+        list_tempat_wisata += TempatWisata.objects.filter(kecamatan= objek_kecamatan.nama)
+    serializer = TempatWisataSerializer(list_tempat_wisata, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def getTempatWisataByKecamatan (request, kecamatan):
