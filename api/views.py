@@ -28,7 +28,7 @@ def getDataTempatWisata (request):
 
 @api_view(['GET'])
 def getFotoTambahanWisata(request, id):
-    FotoTambahanWisatas = FotoTambahanWisata.objects.filter(tempat_wisata=int(id))
+    FotoTambahanWisatas = FotoTambahanWisata.objects.filter(tempatWisata=int(id))
     serializer = FotoTambahanWisataSerializer(FotoTambahanWisatas, many=True)
     return Response(serializer.data)
 
@@ -76,12 +76,12 @@ def getTempatWisataByKategoriKecamatan (request, kategori, kecamatan):
 
 @api_view(['GET'])
 def getTempatWisataByKategoriKota (request, kategori, kota):
-    kecamatans = Kecamatan.objects.filter(kota=kota, kategori=kategori)
+    kecamatans = Kecamatan.objects.filter(kota=kota)
     list_kecamatan = [entry for entry in kecamatans]
     list_tempat_wisata = list()
     for objek_kecamatan in list_kecamatan:
         print(objek_kecamatan.nama)
-        list_tempat_wisata += TempatWisata.objects.filter(kecamatan= objek_kecamatan.nama)
+        list_tempat_wisata += TempatWisata.objects.filter(kecamatan= objek_kecamatan.nama, kategori=kategori)
     serializer = TempatWisataSerializer(list_tempat_wisata, many=True)
     return Response(serializer.data)
 
