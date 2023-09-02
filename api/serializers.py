@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from catalog.models import *
+from users.models import *
 
 class KategoriSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,4 +29,16 @@ class TempatWisataSerializer(serializers.ModelSerializer):
 class FotoTambahanWisataSerializer(serializers.ModelSerializer):
     class Meta:
         model = FotoTambahanWisata
+        fields = '__all__'
+
+
+class ProfileUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProfileUser
+        fields = '__all__'
+
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
         fields = '__all__'

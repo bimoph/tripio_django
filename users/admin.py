@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser
+from .models import CustomUser, ProfileUser
 # from django.contrib.auth.admin import UserAdmin
 # from django.utils.translation import gettext_lazy as _
 
@@ -29,3 +29,4 @@ from .models import CustomUser
 
 
 admin.site.register( CustomUser)
+admin.site.register( ProfileUser)

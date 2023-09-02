@@ -23,3 +23,4 @@ class RegisterView(APIView):
 
 class EmailTokenObtainPairView(TokenObtainPairView):
     serializer_class = serializers.TokenObtainPairSerializer
+

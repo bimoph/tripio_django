@@ -6,12 +6,18 @@ urlpatterns = [
     path('get_kota', views.getDataKota),
     path('get_kecamatan', views.getDataKecamatan),
     path('get_tempat_wisata', views.getDataTempatWisata),
+    path('get_all_profile_user',views.getAllProfileUser),
+    path('get_all_custom_user',views.getAllCustomUser),
+
+    path('get_profile_user/<str:email>',views.getProfileUser),
 
     path('add_kategori', views.addKategori),
     path('add_kota', views.addKota),
     path('add_kecamatan', views.addKecamatan),
     path('add_tempat_wisata', views.addTempatWisata),
     path('add_foto_tambahan', views.addFotoTambahan),
+    path('add_profile_user', views.addProfileUser),
+
 
 
     path('get_foto_tambahan_tempat_wisata/<str:id>', views.getFotoTambahanWisata),

@@ -26,10 +26,46 @@ def getDataTempatWisata (request):
     serializer = TempatWisataSerializer(TempatWisatas, many=True)
     return Response(serializer.data)
 
+
+@api_view(['GET'])
+def getAllProfileUser (request):
+    profileusers = ProfileUser.objects.all()
+    serializer = ProfileUserSerializer(profileusers, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getAllCustomUser (request):
+    customusers = CustomUser.objects.all()
+    serializer = CustomUserSerializer(customusers, many=True)
+    return Response(serializer.data)
+
 @api_view(['GET'])
 def getFotoTambahanWisata(request, id):
     FotoTambahanWisatas = FotoTambahanWisata.objects.filter(tempatWisata=int(id))
     serializer = FotoTambahanWisataSerializer(FotoTambahanWisatas, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getProfileUser(request, email):
+    prim_key = int()
+    for user in CustomUser.objects.all():
+        if user.email == email:
+            prim_key = user.id
+            break
+    ProfileUsers = ProfileUser.objects.filter(user=prim_key)
+    serializer = ProfileUserSerializer(ProfileUsers, many=True)
+    return Response(serializer.data)
+
+# @api_view(['GET'])
+# def get
+
+@api_view(['POST'])
+def addProfileUser(request):
+    serializer = ProfileUserSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
     return Response(serializer.data)
 
 @api_view(['POST'])
@@ -113,3 +149,4 @@ def getTempatWisataBySearchNama (request, nama):
     TempatWisatas = TempatWisata.objects.filter(nama__icontains= nama)
     serializer = TempatWisataSerializer(TempatWisatas, many=True)
     return Response(serializer.data)
+
