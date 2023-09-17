@@ -53,5 +53,5 @@ class ProfileUser(models.Model):
     user = models.OneToOneField(CustomUser, on_delete= models.CASCADE)
     name = models.CharField(max_length=35)
     foto = models.ImageField(blank=True, null=True, upload_to="images/")
-    jumlah_review = models.IntegerField()
-    review_disukai = models.IntegerField()
+    jumlah_review = models.IntegerField(default=0)
+    review_disukai = models.IntegerField(default=0)

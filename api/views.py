@@ -1,6 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializers import *
+from rest_framework import viewsets, status
+from users.models import ProfileUser
 
 @api_view(['GET'])
 def getDataKategori (request):
@@ -46,6 +48,19 @@ def getFotoTambahanWisata(request, id):
     serializer = FotoTambahanWisataSerializer(FotoTambahanWisatas, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def getComment(request, tempat_wisata):
+    comments = Comment.objects.filter(tempat_wisata=tempat_wisata)
+    serializer = CommentSerializer(comments, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getReply(request, comment):
+    replies = Reply.objects.filter(comment=comment)
+    serializer = ReplySerializer(replies, many=True)
+    return Response(serializer.data)
+
+
 
 @api_view(['GET'])
 def getProfileUser(request, email):
@@ -58,8 +73,23 @@ def getProfileUser(request, email):
     serializer = ProfileUserSerializer(ProfileUsers, many=True)
     return Response(serializer.data)
 
-# @api_view(['GET'])
-# def get
+
+
+@api_view(['POST'])
+def addComment(request):
+    serializer = Comment(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+
+
+@api_view(['POST'])
+def addReply(request):
+    serializer = Reply(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
 
 @api_view(['POST'])
 def addProfileUser(request):
@@ -150,3 +180,51 @@ def getTempatWisataBySearchNama (request, nama):
     serializer = TempatWisataSerializer(TempatWisatas, many=True)
     return Response(serializer.data)
 
+@api_view(['POST'])
+def incrementLikedComment(request):
+    try:
+        comment_id = request.data.get('id')
+        if comment_id is None:
+            return Response({'message': 'Please provide a comment ID in the request body'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        instance = Comment.objects.get(id=int(comment_id))
+    except Comment.DoesNotExist:
+        return Response({'message': 'Comment not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    instance.liked += 1
+    authorUser = ProfileUser.objects.get(user=instance.author.id)
+    authorUser.review_disukai += 1
+    authorUser.save()
+    instance.save()
+    return Response({'message': 'Liked attribute updated successfully'}, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def incrementLikedReply(request):
+    try:
+        comment_id = request.data.get('id')
+        if comment_id is None:
+            return Response({'message': 'Please provide a comment ID in the request body'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        instance = Reply.objects.get(id=int(comment_id))
+    except Reply.DoesNotExist:
+        return Response({'message': 'Comment not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    instance.liked += 1
+    authorUser = ProfileUser.objects.get(user=instance.author.id)
+    authorUser.review_disukai += 1
+    authorUser.save()
+    instance.save()
+    return Response({'message': 'Liked attribute updated successfully'}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def getAllComment(request):
+    comments = Comment.objects.all()
+    serializer = CommentSerializer(comments, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getAllReply(request):
+    replies = Reply.objects.all()
+    serializer = ReplySerializer(replies, many=True)
+    return Response(serializer.data)
