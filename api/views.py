@@ -74,6 +74,14 @@ def getProfileUser(request, email):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+def getProfileUserByUser(request, pk):
+    pk = int(pk)    
+    ProfileUsers = ProfileUser.objects.filter(user=pk)
+    serializer = ProfileUserSerializer(ProfileUsers, many=True)
+    return Response(serializer.data)
+
+
 
 @api_view(['POST'])
 def addComment(request):

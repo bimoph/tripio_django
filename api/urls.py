@@ -10,6 +10,8 @@ urlpatterns = [
     path('get_all_custom_user',views.getAllCustomUser),
 
     path('get_profile_user/<str:email>',views.getProfileUser),
+    path('get_profile_user/<str:pk>',views.getProfileUserByUser),
+
     path('get_comment/<str:tempat_wisata>',views.getComment),
     path('get_all_comment',views.getAllComment),
     path('get_all_reply',views.getAllReply),
