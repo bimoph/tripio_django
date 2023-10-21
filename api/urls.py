@@ -32,7 +32,7 @@ urlpatterns = [
 
 
 
-    path('get_foto_tambahan_tempat_wisata/<str:id_user>', views.getFotoTambahanWisata),
+    path('get_foto_tambahan_tempat_wisata/<str:id>', views.getFotoTambahanWisata),
     
 
 
