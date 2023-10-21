@@ -75,9 +75,15 @@ def getProfileUser(request, email):
 
 
 @api_view(['GET'])
-def getProfileUserByUser(request, pk):
-    pk = int(pk)    
-    ProfileUsers = ProfileUser.objects.filter(user=pk)
+def getProfileUserByUser(request, pk_user):
+    pk_user = int(pk_user)    
+    email = CustomUser.objects.get(id=pk_user).email
+    prim_key = int()
+    for user in CustomUser.objects.all():
+        if user.email == email:
+            prim_key = user.id
+            break
+    ProfileUsers = ProfileUser.objects.filter(user=prim_key)
     serializer = ProfileUserSerializer(ProfileUsers, many=True)
     return Response(serializer.data)
 

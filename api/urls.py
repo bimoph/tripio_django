@@ -10,7 +10,7 @@ urlpatterns = [
     path('get_all_custom_user',views.getAllCustomUser),
 
     path('get_profile_user/<str:email>',views.getProfileUser),
-    path('get_profile_user/<str:pk>',views.getProfileUserByUser),
+    path('get_profile_user_by_id_user/<str:pk_user>',views.getProfileUserByUser),
 
     path('get_comment/<str:tempat_wisata>',views.getComment),
     path('get_all_comment',views.getAllComment),
@@ -32,7 +32,7 @@ urlpatterns = [
 
 
 
-    path('get_foto_tambahan_tempat_wisata/<str:id>', views.getFotoTambahanWisata),
+    path('get_foto_tambahan_tempat_wisata/<str:id_user>', views.getFotoTambahanWisata),
     
 
 
@@ -42,10 +42,6 @@ urlpatterns = [
 
     path('get_tempat_wisata_by_kategori_kota/<str:kategori>/<str:kota>', views.getTempatWisataByKategoriKota),
     path('get_tempat_wisata_by_kategori_kecamatan/<str:kategori>/<str:kecamatan>', views.getTempatWisataByKategoriKecamatan),
-
-
-
-
 
     path('get_tempat_wisata_by_search_nama/<str:nama>', views.getTempatWisataBySearchNama),
 
