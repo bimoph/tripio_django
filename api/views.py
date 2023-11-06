@@ -91,7 +91,7 @@ def getProfileUserByUser(request, pk_user):
 
 @api_view(['POST'])
 def addComment(request):
-    serializer = Comment(data=request.data)
+    serializer = CommentSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
@@ -100,7 +100,7 @@ def addComment(request):
 
 @api_view(['POST'])
 def addReply(request):
-    serializer = Reply(data=request.data)
+    serializer = ReplySerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
